@@ -1,4 +1,4 @@
 <div *ngIf="rateLimit">
-  <p>Number of requests remaining: {{ rateLimit.remaining }}</p>
+  <p>Number of requests remaining: {{ rateLimit.remaining }} / {{ rateLimit.limit }}</p>
   <p>Reset time: {{ rateLimit.reset | date: 'shortTime' }}</p>
 </div>

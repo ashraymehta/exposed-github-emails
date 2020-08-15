@@ -22,6 +22,7 @@ export class GithubService {
         const octokit = GithubService.getOctokit(personalAccessToken);
         const rateLimitResponse = await octokit.rateLimit.get();
         return {
+            limit: rateLimitResponse.data.rate.limit,
             remaining: rateLimitResponse.data.rate.remaining,
             reset: new Date(rateLimitResponse.data.rate.reset * 1000)
         };
@@ -47,5 +48,6 @@ interface Commit {
 
 export interface RateLimit {
     remaining: number;
+    limit: number;
     reset: Date;
 }
