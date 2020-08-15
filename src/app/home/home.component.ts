@@ -1,7 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RateLimitComponent} from '../rate-limit/rate-limit.component';
 
 @Component({
@@ -10,22 +9,17 @@ import {RateLimitComponent} from '../rate-limit/rate-limit.component';
 })
 export class HomeComponent {
     public exposedEmails: string[];
-    public readonly formGroup: FormGroup;
     private readonly githubService: GithubService;
     @ViewChild(RateLimitComponent)
     private readonly rateLimitComponent: RateLimitComponent;
 
-    constructor(activatedRoute: ActivatedRoute, githubService: GithubService, formBuilder: FormBuilder) {
+    constructor(activatedRoute: ActivatedRoute, githubService: GithubService) {
         this.githubService = githubService;
-        this.formGroup = formBuilder.group({
-            username: formBuilder.control(undefined, Validators.required),
-            accessToken: formBuilder.control(undefined)
-        })
         activatedRoute.queryParams.subscribe(params => this.onQueryParamsChanged(params));
     }
 
-    onFormSubmit() {
-        this.refreshExposedEmails(this.formGroup.controls.username.value, this.formGroup.controls.accessToken.value);
+    onGithubInputSubmission(data: { username: string; accessToken: string }) {
+        this.refreshExposedEmails(data.username, data.accessToken);
     }
 
     private async onQueryParamsChanged(params: Params): Promise<void> {

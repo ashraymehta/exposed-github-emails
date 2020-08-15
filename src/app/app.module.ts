@@ -7,12 +7,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {NgbProgressbarModule} from '@ng-bootstrap/ng-bootstrap';
 import {RateLimitComponent} from './rate-limit/rate-limit.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {GithubInputComponent} from './github-input/github-input.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
-        RateLimitComponent
+        RateLimitComponent,
+        GithubInputComponent
     ],
     imports: [
         BrowserModule,
