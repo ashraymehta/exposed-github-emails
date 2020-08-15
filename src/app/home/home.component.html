@@ -1,4 +1,8 @@
-<app-rate-limit></app-rate-limit>
-<div>
-  <div *ngFor="let email of exposedEmails">{{ email }}</div>
+<div class="row h-100 align-items-center">
+  <div class="col-12">
+    <app-rate-limit></app-rate-limit>
+    <div>
+      <div *ngFor="let email of exposedEmails">{{ email }}</div>
+    </div>
+  </div>
 </div>

@@ -2,9 +2,10 @@ import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-root',
-    template: `<router-outlet></router-outlet>`,
-    styles: []
+    template: `
+      <div class="container h-100">
+        <router-outlet></router-outlet>
+      </div>`
 })
 export class AppComponent {
-    title = 'exposed-github-emails';
 }

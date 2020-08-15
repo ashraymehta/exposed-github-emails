@@ -1,4 +1,8 @@
 <div *ngIf="rateLimit">
-  <p>Number of requests remaining: {{ rateLimit.remaining }} / {{ rateLimit.limit }}</p>
-  <p>Reset time: {{ rateLimit.reset | date: 'shortTime' }}</p>
+  <div class="row">
+    <ngb-progressbar [max]="rateLimit.limit"
+                     [value]="rateLimit.remaining"
+                     class="offset-3 col-6">{{rateLimit.remaining}} / {{rateLimit.limit}}</ngb-progressbar>
+  </div>
+  <p class="text-center"><small>Limit resets at: {{ rateLimit.reset | date: 'shortTime' }}</small></p>
 </div>
