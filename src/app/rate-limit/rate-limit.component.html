@@ -1,0 +1,4 @@
+<div *ngIf="rateLimit">
+  <p>Number of requests remaining: {{ rateLimit.remaining }}</p>
+  <p>Reset time: {{ rateLimit.reset | date: 'shortTime' }}</p>
+</div>
