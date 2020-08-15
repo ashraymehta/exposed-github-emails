@@ -4,8 +4,8 @@
       <div class="col-md-6 offset-md-3 col-sm-12">
         <label for="username">Username</label>
         <input #username formControlName="username" type="text" class="form-control" id="username" aria-describedby="usernameHelp"
-               placeholder="Github username" required>
-        <small id="usernameHelp" class="form-text text-muted">We never share this data with anyone else.</small>
+               placeholder="GitHub username" required>
+        <small id="usernameHelp" class="form-text text-muted">GitHub username to analyze</small>
       </div>
     </div>
     <div class="row mt-3">
@@ -13,8 +13,14 @@
         <label for="accessToken">Authentication</label>
         <input formControlName="accessToken" type="password" class="form-control" id="accessToken" aria-describedby="accessTokenHelp"
                placeholder="Personal Access Token (Optional)">
-        <small id="accessTokenHelp" class="form-text text-muted">Enter your personal access token to get past Github's rate
-          limiting.</small>
+        <small id="accessTokenHelp" class="form-text text-muted">Enter your
+          <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token"
+             target="_blank">personal access token</a>
+          to avoid breaching Github's
+          <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting"
+             target="_blank">rate limit</a>.
+          <br/>
+          This token is only used for analyzing email addresses from your repositories. None of your data is stored in any form .</small>
       </div>
     </div>
     <div class="row mt-3">
