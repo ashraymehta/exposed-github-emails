@@ -6,6 +6,7 @@ import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {NgbProgressbarModule} from '@ng-bootstrap/ng-bootstrap';
 import {RateLimitComponent} from './rate-limit/rate-limit.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {RateLimitComponent} from './rate-limit/rate-limit.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        NgbProgressbarModule
+        NgbProgressbarModule,
+        ReactiveFormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

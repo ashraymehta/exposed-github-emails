@@ -1,6 +1,36 @@
 <div class="row h-100 align-items-center">
   <div class="col-12">
-    <app-rate-limit></app-rate-limit>
+    <div>
+      <form [formGroup]="formGroup" (ngSubmit)="onFormSubmit()">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6 offset-md-3 col-sm-12">
+              <label for="username">Username</label>
+              <input #username formControlName="username" type="text" class="form-control" id="username" aria-describedby="usernameHelp"
+                     placeholder="Github username" required>
+              <small id="usernameHelp" class="form-text text-muted">We never share this data with anyone else.</small>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6 offset-md-3 col-sm-12">
+              <label for="accessToken">Authentication</label>
+              <input formControlName="accessToken" type="password" class="form-control" id="accessToken" aria-describedby="accessTokenHelp"
+                     placeholder="Personal Access Token (Optional)">
+              <small id="accessTokenHelp" class="form-text text-muted">Enter your personal access token to get past Github's rate
+                limiting.</small>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6 offset-md-3 col-sm-12">
+              <button class="btn btn-primary" type="submit"
+                      [disabled]="!username.value">Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--    <app-rate-limit></app-rate-limit>-->
     <div>
       <div *ngFor="let email of exposedEmails">{{ email }}</div>
     </div>
