@@ -31,4 +31,4 @@ jobs:
       with:
         BRANCH: gh-pages
         FOLDER: dist
-        TARGET_FOLDER: ./
+        CLEAN: true
