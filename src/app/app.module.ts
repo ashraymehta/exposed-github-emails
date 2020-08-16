@@ -10,6 +10,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {GithubInputComponent} from './github-input/github-input.component';
 import {LottieModule} from 'ngx-lottie';
 import { LoaderComponent } from './loader/loader.component';
+import { ExposedListComponent } from './exposed-list/exposed-list.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { LoaderComponent } from './loader/loader.component';
         HomeComponent,
         RateLimitComponent,
         GithubInputComponent,
-        LoaderComponent
+        LoaderComponent,
+        ExposedListComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,6 @@
+<div *ngIf="exposedEmails">
+  <h3>We found the following email addresses exposed:</h3>
+  <div class="card mt-2" *ngFor="let email of exposedEmails">
+    <div class="card-body">{{ email }}</div>
+  </div>
+</div>
