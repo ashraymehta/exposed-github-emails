@@ -12,7 +12,8 @@ export class GithubService {
             throttle: {
                 onRateLimit: () => {
                     throw new RateLimitError();
-                }
+                },
+                onAbuseLimit: () => {}
             }
         });
     }

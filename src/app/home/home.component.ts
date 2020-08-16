@@ -1,20 +1,24 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {RateLimitError} from '../errors/rate-limit.error';
+import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-prompt.component';
 
 @Component({
     templateUrl: 'home.component.html',
     styles: []
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     public readonly State = State;
     public exposedEmails: string[];
     public componentState: State = State.Idle;
+    private readonly modalService: NgbModal;
     private readonly githubService: GithubService;
 
-    constructor(activatedRoute: ActivatedRoute, githubService: GithubService) {
+    constructor(activatedRoute: ActivatedRoute, githubService: GithubService, modalService: NgbModal) {
         this.githubService = githubService;
+        this.modalService = modalService;
         activatedRoute.queryParams.subscribe(params => this.onQueryParamsChanged(params));
     }
 
@@ -45,7 +49,11 @@ export class HomeComponent {
     }
 
     private onRateLimitBreached() {
-        console.log(`Rate limit has been breached.`);
+        this.modalService.open(AccessTokenPromptComponent);
+    }
+
+    ngOnInit(): void {
+        this.onRateLimitBreached();
     }
 }
 

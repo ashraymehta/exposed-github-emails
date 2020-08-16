@@ -1,0 +1,30 @@
+<div class="modal-header m-2">
+  <div class="modal-title d-flex align-items-end">
+    <ng-lottie [options]="{path: 'https://assets10.lottiefiles.com/packages/lf20_Tkwjw8.json', initialSegment: [25, 80]}"
+               width="75px" class="mt-md-n3 mb-md-n3"></ng-lottie>
+    <h4>Rate limit exceeded</h4>
+  </div>
+</div>
+<div class="modal-body m-2">
+  <p>It looks like you've breached GitHub's
+    <a href="https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting"
+       target="_blank">rate limiting</a>. You may create a
+    <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token"
+       target="_blank">personal access token</a> to enhance your limits.</p>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onFormSubmitted()">
+    <div class="form-group mt-3">
+      <label for="accessToken">GitHub Credentials</label>
+      <input #accessToken formControlName="accessToken" type="password" class="form-control" id="accessToken"
+             aria-describedby="accessTokenHelp" placeholder="Personal Access Token" required>
+      <small id="accessTokenHelp" class="form-text text-muted">We use this token only for analyzing email addresses from your repositories.
+        None of your data is stored in any form.</small>
+      <div class="invalid-feedback">
+        Looks like this token is invalid.
+      </div>
+    </div>
+    <div class="mt-3 text-right">
+      <button class="btn btn-primary" ngbAutofocus type="submit" [disabled]="!accessToken.value">Continue</button>
+    </div>
+  </form>
+</div>
