@@ -1,7 +1,6 @@
 import {Octokit} from '@octokit/rest';
 import {Injectable} from '@angular/core';
 import {throttling} from "@octokit/plugin-throttling";
-import {RateLimitError} from '../errors/rate-limit.error';
 
 @Injectable({providedIn: 'root'})
 export class GithubService {
@@ -11,9 +10,10 @@ export class GithubService {
             auth: personalAccessToken,
             throttle: {
                 onRateLimit: () => {
-                    throw new RateLimitError();
+                    return false;
                 },
                 onAbuseLimit: () => {
+                    return false;
                 }
             }
         });

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ActivatedRoute, Params} from '@angular/router';
-import {RateLimitError} from '../errors/rate-limit.error';
+import {ActivatedRoute} from '@angular/router';
 import {GithubService, Repository} from '../data/github.service';
 import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-prompt.component';
 
@@ -32,7 +31,7 @@ export class HomeComponent {
             this.repositoriesAndExposedEmails = await this.githubService.getExposedEmails(username, accessToken);
             this.componentState = State.ShowingResults;
         } catch (error) {
-            if (error instanceof RateLimitError) {
+            if (error.status === 403) {
                 this.onRateLimitBreached();
             } else {
                 throw error;
