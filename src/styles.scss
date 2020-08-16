@@ -21,6 +21,10 @@ input {
   border-bottom: $input-border-width solid $input-border-color !important;
 }
 
+button:focus {
+  box-shadow: unset !important;
+}
+
 input:focus {
   border-bottom-width: 0 !important;
   box-shadow: 0 $input-btn-focus-width $input-btn-focus-color !important;
