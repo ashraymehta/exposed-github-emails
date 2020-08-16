@@ -19,19 +19,10 @@ export class HomeComponent {
     constructor(activatedRoute: ActivatedRoute, githubService: GithubService, modalService: NgbModal) {
         this.githubService = githubService;
         this.modalService = modalService;
-        activatedRoute.queryParams.subscribe(params => this.onQueryParamsChanged(params));
     }
 
     onGithubInputSubmission(data: { username: string; }) {
         this.refreshExposedEmails(data.username, this.accessToken);
-    }
-
-    private async onQueryParamsChanged(params: Params): Promise<void> {
-        const username = params.username;
-        const accessToken = params.accessToken;
-        if (username) {
-            await this.refreshExposedEmails(username, accessToken);
-        }
     }
 
     private async refreshExposedEmails(username, accessToken) {
