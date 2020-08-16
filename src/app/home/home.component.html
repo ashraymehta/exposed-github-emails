@@ -1,11 +1,20 @@
 <div class="row h-100 align-items-center">
-  <div class="col-md-6 offset-md-3 col-sm-12">
-    <app-github-input [hidden]="componentState === State.Loading"
-                      (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
-    <app-loader *ngIf="componentState === State.Loading"></app-loader>
-    <div style="margin-top: 10vh;">
-      <app-exposed-list [exposedEmails]="exposedEmails"
-                        *ngIf="componentState === State.Idle"></app-exposed-list>
+  <div class="col-12">
+    <div class="row" [hidden]="componentState === State.Loading">
+      <div class="col-md-8 offset-md-2 col-sm-12 mb-5 text-center">Find your email addresses which are publicly exposed on GitHub as git
+        commit metadata.
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
+        <app-github-input [hidden]="componentState === State.Loading"
+                          (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
+        <app-loader *ngIf="componentState === State.Loading"></app-loader>
+        <div style="margin-top: 10vh;">
+          <app-exposed-list [exposedEmails]="exposedEmails"
+                            *ngIf="componentState === State.ShowingResults"></app-exposed-list>
+        </div>
+      </div>
     </div>
   </div>
 </div>

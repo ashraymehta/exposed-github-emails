@@ -6,13 +6,12 @@ import {RateLimitError} from '../errors/rate-limit.error';
 import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-prompt.component';
 
 @Component({
-    templateUrl: 'home.component.html',
-    styles: []
+    templateUrl: 'home.component.html'
 })
 export class HomeComponent {
     public readonly State = State;
     public exposedEmails: string[];
-    public componentState: State = State.Idle;
+    public componentState: State = State.Initial;
     private accessToken?: string;
     private readonly modalService: NgbModal;
     private readonly githubService: GithubService;
@@ -40,6 +39,7 @@ export class HomeComponent {
         try {
             this.exposedEmails = undefined;
             this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
+            this.componentState = State.ShowingResults;
         } catch (error) {
             if (error instanceof RateLimitError) {
                 this.onRateLimitBreached();
@@ -47,11 +47,10 @@ export class HomeComponent {
                 throw error;
             }
         }
-        this.componentState = State.Idle;
     }
 
     private async onRateLimitBreached() {
-        this.componentState = State.Idle;
+        this.componentState = State.Initial;
         this.accessToken = await this.modalService.open(AccessTokenPromptComponent, {
             keyboard: false,
             backdrop: "static",
@@ -61,5 +60,5 @@ export class HomeComponent {
 }
 
 enum State {
-    Loading, Idle
+    Loading, Initial, ShowingResults
 }
