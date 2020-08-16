@@ -8,19 +8,23 @@ import {NgbProgressbarModule} from '@ng-bootstrap/ng-bootstrap';
 import {RateLimitComponent} from './rate-limit/rate-limit.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {GithubInputComponent} from './github-input/github-input.component';
+import {LottieModule} from 'ngx-lottie';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HomeComponent,
         RateLimitComponent,
-        GithubInputComponent
+        GithubInputComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         NgbProgressbarModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LottieModule.forRoot({player: () => import('lottie-web')})
     ],
     providers: [],
     bootstrap: [AppComponent]

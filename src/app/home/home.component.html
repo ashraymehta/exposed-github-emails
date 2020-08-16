@@ -1,9 +1,14 @@
 <div class="row h-100 align-items-center">
   <div class="col-12">
-    <app-github-input (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
-    <!--    <app-rate-limit></app-rate-limit>-->
-    <div>
-      <div *ngFor="let email of exposedEmails">{{ email }}</div>
+    <app-github-input *ngIf="componentState === State.Idle" (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
+    <app-loader *ngIf="componentState === State.Loading"></app-loader>
+    <div class="row" *ngIf="componentState === State.Idle && exposedEmails">
+      <div class="col-md-6 offset-md-3 col-sm-12">
+        <h3>We found the following email addresses exposed:</h3>
+        <div class="card mt-2" *ngFor="let email of exposedEmails">
+          <div class="card-body">{{ email }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

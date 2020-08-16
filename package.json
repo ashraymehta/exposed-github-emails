@@ -21,6 +21,8 @@
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@octokit/rest": "^18.0.3",
     "bootstrap": "^4.5.0",
+    "lottie-web": "^5.7.1",
+    "ngx-lottie": "^6.3.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

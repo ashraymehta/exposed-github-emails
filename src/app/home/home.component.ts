@@ -1,17 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {RateLimitComponent} from '../rate-limit/rate-limit.component';
 
 @Component({
     templateUrl: 'home.component.html',
     styles: []
 })
 export class HomeComponent {
+    public readonly State = State;
     public exposedEmails: string[];
+    public componentState: State = State.Idle;
     private readonly githubService: GithubService;
-    @ViewChild(RateLimitComponent)
-    private readonly rateLimitComponent: RateLimitComponent;
 
     constructor(activatedRoute: ActivatedRoute, githubService: GithubService) {
         this.githubService = githubService;
@@ -31,7 +30,12 @@ export class HomeComponent {
     }
 
     private async refreshExposedEmails(username, accessToken) {
+        this.componentState = State.Loading;
         this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
-        await this.rateLimitComponent.refreshRateLimit(accessToken);
+        this.componentState = State.Idle;
     }
+}
+
+enum State {
+    Loading, Idle
 }
