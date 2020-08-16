@@ -1,6 +1,12 @@
 <div *ngIf="exposedEmails">
-  <h3>We found the following email addresses exposed:</h3>
-  <div class="card mt-2" *ngFor="let email of exposedEmails">
-    <div class="card-body">{{ email }}</div>
+  <h3 [ngPlural]="exposedEmails.length">
+    <ng-template ngPluralCase="0">None of your email addresses are exposed.</ng-template>
+    <ng-template ngPluralCase="1">Found {{ exposedEmails.length }} email address exposed.</ng-template>
+    <ng-template ngPluralCase="other">Found {{ exposedEmails.length }} email addresses exposed.</ng-template>
+  </h3>
+  <div class="mt-3">
+    <div class="card mt-2" *ngFor="let email of exposedEmails">
+      <div class="card-body">{{ email }}</div>
+    </div>
   </div>
 </div>
