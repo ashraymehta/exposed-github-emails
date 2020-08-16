@@ -3,7 +3,7 @@
     <div class="d-flex align-items-end">
       <input #username formControlName="username" type="text" class="form-control form-control-lg" id="username"
              aria-label="GitHub Username" placeholder="GitHub username" required>
-      <button type="submit" class="btn ml-n5 mb-2" [disabled]="!username.value">
+      <button type="submit" class="btn ml-n5 mb-2" role="button" [disabled]="!username.value">
         <app-search-icon></app-search-icon>
       </button>
     </div>

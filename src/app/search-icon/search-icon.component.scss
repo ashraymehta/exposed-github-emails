@@ -1,0 +1,9 @@
+@import "../../styles.scss";
+
+.bi {
+  transition: $transition-base;
+}
+
+.bi:hover {
+  color: $primary;
+}
