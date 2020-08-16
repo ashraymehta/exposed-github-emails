@@ -12,7 +12,7 @@ import {Component} from '@angular/core';
         </a>
       </nav>
 
-      <div class="container h-100">
+      <div class="container" style="height: calc(100vh - 49px)">
         <router-outlet></router-outlet>
       </div>`
 })
