@@ -1,8 +1,11 @@
 <div class="row h-100 align-items-center">
   <div class="col-md-6 offset-md-3 col-sm-12">
-    <app-github-input *ngIf="componentState === State.Idle" (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
+    <app-github-input [hidden]="componentState === State.Loading"
+                      (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
     <app-loader *ngIf="componentState === State.Loading"></app-loader>
-    <app-exposed-list [exposedEmails]="exposedEmails"
-                      *ngIf="componentState === State.Idle"></app-exposed-list>
+    <div style="margin-top: 10vh;">
+      <app-exposed-list [exposedEmails]="exposedEmails"
+                        *ngIf="componentState === State.Idle"></app-exposed-list>
+    </div>
   </div>
 </div>
