@@ -1,8 +1,8 @@
 <div class="row h-100 align-items-center">
   <div class="col-12">
     <div class="row" [hidden]="componentState === State.Loading">
-      <div class="col-md-8 offset-md-2 col-sm-12 mb-5 text-center">Find your email addresses which are publicly exposed on GitHub as git
-        commit metadata.
+      <div class="col-md-8 offset-md-2 col-sm-12 mb-5 mt-5 text-center">Find your email addresses which are publicly exposed on GitHub as
+        git commit metadata.
       </div>
     </div>
     <div class="row">
@@ -13,6 +13,9 @@
         <div style="margin-top: 10vh;">
           <app-exposed-list [exposedEmails]="exposedEmails"
                             *ngIf="componentState === State.ShowingResults"></app-exposed-list>
+        </div>
+        <div style="margin-top: 10vh;" class="mb-3">
+          <app-faqs *ngIf="componentState === State.ShowingResults && exposedEmails.length > 0"></app-faqs>
         </div>
       </div>
     </div>
