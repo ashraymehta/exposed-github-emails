@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {RateLimitError} from '../errors/rate-limit.error';
+import {GithubService, Repository} from '../data/github.service';
 import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-prompt.component';
 
 @Component({
@@ -10,8 +10,8 @@ import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-pr
 })
 export class HomeComponent {
     public readonly State = State;
-    public exposedEmails: string[];
     public componentState: State = State.Initial;
+    public repositoriesAndExposedEmails: { repository: Repository, emails: string[] }[];
     private accessToken?: string;
     private readonly modalService: NgbModal;
     private readonly githubService: GithubService;
@@ -37,8 +37,8 @@ export class HomeComponent {
     private async refreshExposedEmails(username, accessToken) {
         this.componentState = State.Loading;
         try {
-            this.exposedEmails = undefined;
-            this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
+            this.repositoriesAndExposedEmails = undefined;
+            this.repositoriesAndExposedEmails = await this.githubService.getExposedEmails(username, accessToken);
             this.componentState = State.ShowingResults;
         } catch (error) {
             if (error instanceof RateLimitError) {

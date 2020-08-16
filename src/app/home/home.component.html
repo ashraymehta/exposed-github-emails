@@ -11,11 +11,11 @@
                           (onSubmit)="onGithubInputSubmission($event)"></app-github-input>
         <app-loader *ngIf="componentState === State.Loading"></app-loader>
         <div style="margin-top: 10vh;">
-          <app-exposed-list [exposedEmails]="exposedEmails"
+          <app-exposed-list [repositoriesAndExposedEmails]="repositoriesAndExposedEmails"
                             *ngIf="componentState === State.ShowingResults"></app-exposed-list>
         </div>
         <div style="margin-top: 10vh;" class="mb-3">
-          <app-faqs *ngIf="componentState === State.ShowingResults && exposedEmails.length > 0"></app-faqs>
+          <app-faqs *ngIf="componentState === State.ShowingResults && repositoriesAndExposedEmails.length > 0"></app-faqs>
         </div>
       </div>
     </div>

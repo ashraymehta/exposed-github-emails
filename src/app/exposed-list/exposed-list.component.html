@@ -1,12 +1,18 @@
-<div *ngIf="exposedEmails">
-  <h3 [ngPlural]="exposedEmails.length">
+<div *ngIf="exposedEmailsWithRepositories">
+  <h3 [ngPlural]="exposedEmailsWithRepositories.length">
     <ng-template ngPluralCase="0">None of your email addresses are exposed.</ng-template>
-    <ng-template ngPluralCase="1">Found {{ exposedEmails.length }} exposed email address.</ng-template>
-    <ng-template ngPluralCase="other">Found {{ exposedEmails.length }} exposed email addresses.</ng-template>
+    <ng-template ngPluralCase="1">Found {{ exposedEmailsWithRepositories.length }} exposed email address.</ng-template>
+    <ng-template ngPluralCase="other">Found {{ exposedEmailsWithRepositories.length }} exposed email addresses.</ng-template>
   </h3>
   <div class="mt-3">
-    <div class="card mt-2" *ngFor="let email of exposedEmails">
-      <div class="card-body">{{ email }}</div>
+    <div class="card mt-2" *ngFor="let item of exposedEmailsWithRepositories">
+      <div class="card-body">
+        {{ item.email }}
+        <p>Found in:</p>
+        <ul>
+          <li *ngFor="let repo of item.repositories"><a href="{{repo.url}}" target="_blank">{{repo.name}}</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

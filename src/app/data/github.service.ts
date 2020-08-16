@@ -13,20 +13,24 @@ export class GithubService {
                 onRateLimit: () => {
                     throw new RateLimitError();
                 },
-                onAbuseLimit: () => {}
+                onAbuseLimit: () => {
+                }
             }
         });
     }
 
-    public async getExposedEmails(username: string, personalAccessToken?: string): Promise<string[]> {
-        const repositories = await this.getRepositoryNames(username, personalAccessToken);
-        const exposedEmails = new Set<string>();
+    public async getExposedEmails(username: string, personalAccessToken?: string): Promise<{ repository: Repository, emails: string[] }[]> {
+        const repositories = await this.getRepositories(username, personalAccessToken);
+        const exposedEmailsPerRepository = new Set<{ repository: Repository, emails: string[] }>();
         for (const repository of repositories) {
-            const commits = await this.getCommitsForRepositoryByUser(username, repository, personalAccessToken);
+            const commits = await this.getCommitsForRepositoryByUser(username, repository.name, personalAccessToken);
             const emailsForCommit = commits.map(c => c.author.email).concat(commits.map(c => c.committer.email));
-            emailsForCommit.forEach(email => exposedEmails.add(email));
+            exposedEmailsPerRepository.add({
+                repository: {name: repository.name, url: repository.url},
+                emails: Array.from(new Set(emailsForCommit)).filter(email => !!email)
+            });
         }
-        return Array.from(exposedEmails);
+        return Array.from(exposedEmailsPerRepository);
     }
 
     public async getRateLimit(personalAccessToken?: string): Promise<RateLimit> {
@@ -39,10 +43,10 @@ export class GithubService {
         };
     }
 
-    private async getRepositoryNames(username: string, personalAccessToken?: string): Promise<string[]> {
+    private async getRepositories(username: string, personalAccessToken?: string): Promise<Repository[]> {
         const octokit = GithubService.getOctokit(personalAccessToken);
-        const repositories = await octokit.paginate(octokit.repos.listForUser, {username: username});
-        return repositories.map(r => r.name);
+        const repos = await octokit.paginate(octokit.repos.listForUser, {username: username});
+        return repos.map(repo => ({...repo, url: repo.html_url}));
     }
 
     private async getCommitsForRepositoryByUser(username: string, repository: string, personalAccessToken?: string): Promise<Commit[]> {
@@ -50,6 +54,11 @@ export class GithubService {
         const commits = await octokit.paginate(octokit.repos.listCommits, {owner: username, repo: repository, author: username});
         return commits.map(c => c.commit);
     }
+}
+
+export interface Repository {
+    name: string;
+    url: string;
 }
 
 interface Commit {
