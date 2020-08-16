@@ -4,5 +4,6 @@
     <app-loader *ngIf="componentState === State.Loading"></app-loader>
     <app-exposed-list [exposedEmails]="exposedEmails"
                       *ngIf="componentState === State.Idle"></app-exposed-list>
+    <app-rate-limit></app-rate-limit>
   </div>
 </div>

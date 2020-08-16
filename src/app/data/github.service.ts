@@ -1,10 +1,20 @@
 import {Octokit} from '@octokit/rest';
 import {Injectable} from '@angular/core';
+import {throttling} from "@octokit/plugin-throttling";
+import {RateLimitError} from '../errors/rate-limit.error';
 
 @Injectable({providedIn: 'root'})
 export class GithubService {
     private static getOctokit(personalAccessToken?: string): Octokit {
-        return new Octokit({auth: personalAccessToken});
+        const ThrottledOctokit = Octokit.plugin(throttling);
+        return new ThrottledOctokit({
+            auth: personalAccessToken,
+            throttle: {
+                onRateLimit: () => {
+                    throw new RateLimitError();
+                }
+            }
+        });
     }
 
     public async getExposedEmails(username: string, personalAccessToken?: string): Promise<string[]> {

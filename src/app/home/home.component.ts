@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
+import {RateLimitError} from '../errors/rate-limit.error';
 
 @Component({
     templateUrl: 'home.component.html',
@@ -31,8 +32,20 @@ export class HomeComponent {
 
     private async refreshExposedEmails(username, accessToken) {
         this.componentState = State.Loading;
-        this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
+        try {
+            this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
+        } catch (error) {
+            if (error instanceof RateLimitError) {
+                this.onRateLimitBreached();
+            } else {
+                throw error;
+            }
+        }
         this.componentState = State.Idle;
+    }
+
+    private onRateLimitBreached() {
+        console.log(`Rate limit has been breached.`);
     }
 }
 
