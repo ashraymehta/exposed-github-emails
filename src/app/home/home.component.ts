@@ -26,6 +26,10 @@ export class HomeComponent implements OnInit {
         this.refreshExposedEmails(data.username, data.accessToken);
     }
 
+    ngOnInit(): void {
+        this.onRateLimitBreached();
+    }
+
     private async onQueryParamsChanged(params: Params): Promise<void> {
         const username = params.username;
         const accessToken = params.accessToken;
@@ -49,11 +53,11 @@ export class HomeComponent implements OnInit {
     }
 
     private onRateLimitBreached() {
-        this.modalService.open(AccessTokenPromptComponent);
-    }
-
-    ngOnInit(): void {
-        this.onRateLimitBreached();
+        this.modalService.open(AccessTokenPromptComponent, {
+            keyboard: false,
+            backdrop: "static",
+            centered: true
+        });
     }
 }
 
