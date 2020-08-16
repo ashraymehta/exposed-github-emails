@@ -22,14 +22,14 @@ export class GithubService {
     public async getExposedEmails(username: string, personalAccessToken?: string): Promise<{ repository: Repository, emails: string[] }[]> {
         const repositories = await this.getRepositories(username, personalAccessToken);
         const exposedEmailsPerRepository = new Set<{ repository: Repository, emails: string[] }>();
-        for (const repository of repositories) {
+        await Promise.all(repositories.map(async repository => {
             const commits = await this.getCommitsForRepositoryByUser(username, repository.name, personalAccessToken);
             const emailsForCommit = commits.map(c => c.author.email).concat(commits.map(c => c.committer.email));
             exposedEmailsPerRepository.add({
                 repository: {name: repository.name, url: repository.url},
                 emails: Array.from(new Set(emailsForCommit)).filter(email => !!email)
             });
-        }
+        }));
         return Array.from(exposedEmailsPerRepository);
     }
 
