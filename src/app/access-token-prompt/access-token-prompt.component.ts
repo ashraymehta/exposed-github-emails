@@ -27,6 +27,7 @@ export class AccessTokenPromptComponent {
         this.accessTokenInput.nativeElement.classList.remove("is-invalid");
         try {
             await this.githubService.getRateLimit(accessToken);
+            this.activeModal.close(accessToken);
         } catch (error) {
             this.accessTokenInput.nativeElement.classList.add("is-invalid");
         }

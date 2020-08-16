@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
     public readonly State = State;
     public exposedEmails: string[];
     public componentState: State = State.Idle;
+    private accessToken?: string;
     private readonly modalService: NgbModal;
     private readonly githubService: GithubService;
 
@@ -22,8 +23,8 @@ export class HomeComponent implements OnInit {
         activatedRoute.queryParams.subscribe(params => this.onQueryParamsChanged(params));
     }
 
-    onGithubInputSubmission(data: { username: string; accessToken: string }) {
-        this.refreshExposedEmails(data.username, data.accessToken);
+    onGithubInputSubmission(data: { username: string; }) {
+        this.refreshExposedEmails(data.username, this.accessToken);
     }
 
     ngOnInit(): void {
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
     private async refreshExposedEmails(username, accessToken) {
         this.componentState = State.Loading;
         try {
+            this.exposedEmails = undefined;
             this.exposedEmails = await this.githubService.getExposedEmails(username, accessToken);
         } catch (error) {
             if (error instanceof RateLimitError) {
@@ -52,12 +54,13 @@ export class HomeComponent implements OnInit {
         this.componentState = State.Idle;
     }
 
-    private onRateLimitBreached() {
-        this.modalService.open(AccessTokenPromptComponent, {
+    private async onRateLimitBreached() {
+        this.componentState = State.Idle;
+        this.accessToken = await this.modalService.open(AccessTokenPromptComponent, {
             keyboard: false,
             backdrop: "static",
             centered: true
-        });
+        }).result;
     }
 }
 
