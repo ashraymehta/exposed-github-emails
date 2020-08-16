@@ -2,10 +2,23 @@
 
 /* Importing Bootstrap SCSS file. */
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 $font-family-base: 'Montserrat', sans-serif;
 @import '~bootstrap/scss/bootstrap';
 
 html, body {
   display: block;
   height: 100%;
+}
+
+input {
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0 !important;
+  border-bottom: $input-border-width solid $input-border-color !important;
+}
+
+input:focus {
+  border-bottom-width: 0 !important;
+  box-shadow: 0 $input-btn-focus-width $input-btn-focus-color !important;
 }

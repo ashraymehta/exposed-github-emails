@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {GithubService} from '../data/github.service';
 import {ActivatedRoute, Params} from '@angular/router';
@@ -9,7 +9,7 @@ import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-pr
     templateUrl: 'home.component.html',
     styles: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
     public readonly State = State;
     public exposedEmails: string[];
     public componentState: State = State.Idle;
@@ -25,10 +25,6 @@ export class HomeComponent implements OnInit {
 
     onGithubInputSubmission(data: { username: string; }) {
         this.refreshExposedEmails(data.username, this.accessToken);
-    }
-
-    ngOnInit(): void {
-        this.onRateLimitBreached();
     }
 
     private async onQueryParamsChanged(params: Params): Promise<void> {
