@@ -7,5 +7,7 @@
         <app-search-icon></app-search-icon>
       </button>
     </div>
+    <small class="text-danger" *ngIf="usernameValidationState === ValidationState.Invalid">Looks like the user doesn't exist.
+    </small>
   </div>
 </form>

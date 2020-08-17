@@ -11,6 +11,8 @@ export class GithubInputComponent implements AfterViewInit {
 
     @Output()
     public onSubmit = new EventEmitter<{ username: string }>();
+    public usernameValidationState: ValidationState;
+    public readonly ValidationState = ValidationState;
     private readonly activatedRoute: ActivatedRoute;
 
     constructor(formBuilder: FormBuilder, activatedRoute: ActivatedRoute) {
@@ -21,8 +23,13 @@ export class GithubInputComponent implements AfterViewInit {
     }
 
     onFormSubmitted() {
+        this.usernameValidationState = ValidationState.Valid;
         const username = this.formGroup.controls.username.value;
         this.onSubmit.emit({username});
+    }
+
+    markUsernameInvalid() {
+        this.usernameValidationState = ValidationState.Invalid;
     }
 
     ngAfterViewInit(): void {
@@ -36,4 +43,8 @@ export class GithubInputComponent implements AfterViewInit {
             this.onFormSubmitted();
         }
     }
+}
+
+enum ValidationState {
+    Valid, Invalid
 }

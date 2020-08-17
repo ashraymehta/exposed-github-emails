@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {GithubService, Repository} from '../data/github.service';
+import {GithubInputComponent} from '../github-input/github-input.component';
 import {AccessTokenPromptComponent} from '../access-token-prompt/access-token-prompt.component';
 
 @Component({
@@ -14,6 +15,9 @@ export class HomeComponent {
     private accessToken?: string;
     private readonly modalService: NgbModal;
     private readonly githubService: GithubService;
+
+    @ViewChild(GithubInputComponent)
+    private readonly githubInputComponent: GithubInputComponent;
 
     constructor(activatedRoute: ActivatedRoute, githubService: GithubService, modalService: NgbModal) {
         this.githubService = githubService;
@@ -33,6 +37,9 @@ export class HomeComponent {
         } catch (error) {
             if (error.status === 403) {
                 this.onRateLimitBreached();
+            } else if (error.status === 404) {
+                this.componentState = State.Initial;
+                this.githubInputComponent.markUsernameInvalid();
             } else {
                 throw error;
             }
